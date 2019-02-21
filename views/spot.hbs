@@ -1,0 +1,29 @@
+<style>
+  div {
+    width: 80%;
+    margin: 1em auto;
+  }
+</style>
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Add</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each spot}}
+      <tr>
+        <td>{{Name}}</td>
+        <td>{{Description}}</td>
+        <td>{{Add}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+<script>
+
+</script>
