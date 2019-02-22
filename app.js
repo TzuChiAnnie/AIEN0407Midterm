@@ -16,17 +16,25 @@ app.get("/", (req, res) => {
 app.get("/spot/:area", (req, res) => {
   const spot = require("./data/spot.json");
   console.log(req.url.substring(6));
-  console.log(encodeURIComponent(spot[0].Add.slice(3,6)) );
+  console.log(encodeURIComponent(spot[0].Add.slice(3, 6)));
+  console.log(typeof spot);
   //const urlParts = url.parse(req.url, true);
   //urlPart= JSON.parse(JSON.stringify(urlParts.query));
   //console.log(urlParts);
-  if (req.url.substring(6) == encodeURIComponent(spot[0].Add.slice(3,6))) {
-    console.log("true");
-  } else {
-    console.log("false");
+  for (i = 0; i < spot.length; i++) {
+    if (req.url.substring(6) === encodeURIComponent(spot[i].Add.slice(3, 6))) {
+      // console.log(spot[i]);
+      const spotjson = spot[i];
+      // const spotjson = JSON.stringify(spot[i]);
+      console.log(typeof spotjson);
+      // const data = res.locals.renderData;
+      // data.spotjson = spotjson;
+    }
+    // else {
+    //   console.log("false");
+    // }
   }
-  
-  res.render("spot", { spot: spot });
+  res.render("spot", spot[i]);
 });
 app.use((req, res) => {
   res.type("text/plain");
