@@ -13,28 +13,38 @@ app.get("/", (req, res) => {
   const district = require("./data/district.json");
   res.render("home", { district: district });
 });
-app.get("/spot/:area", (req, res) => {
+app.get("/spot/:area?", (req, res) => {
   const spot = require("./data/spot.json");
-  console.log(req.url.substring(6));
-  console.log(encodeURIComponent(spot[0].Add.slice(3, 6)));
-  console.log(typeof spot);
-  //const urlParts = url.parse(req.url, true);
-  //urlPart= JSON.parse(JSON.stringify(urlParts.query));
-  //console.log(urlParts);
-  for (i = 0; i < spot.length; i++) {
-    if (req.url.substring(6) === encodeURIComponent(spot[i].Add.slice(3, 6))) {
-      // console.log(spot[i]);
-      const spotjson = spot[i];
-      // const spotjson = JSON.stringify(spot[i]);
-      console.log(typeof spotjson);
-      // const data = res.locals.renderData;
-      // data.spotjson = spotjson;
+  const dis = require("./data/district.json");
+  const area = [];
+  const spotarea = [];
+  const all = [];
+  if (req.url.substring(6) == "") {
+    for (i = 0; i < dis.length; i++) {
+      for (j = 0; j < spot.length; j++) {
+        if(dis[i].Area==spot[j].Add.slice(3,6)){
+          const spotfilterjson = JSON.parse(JSON.stringify(spot[j]));
+          all.push(spotfilterjson);
+        }   
+      }
     }
-    // else {
-    //   console.log("false");
-    // }
+  } else {
+    for (i = 0; i < dis.length; i++) {
+      if (req.url.substring(6) === encodeURIComponent(dis[i].Area)) {
+        var disfilterjson = JSON.parse(JSON.stringify(dis[i]));
+        area.push(disfilterjson);
+      }
+    }
+    for (i = 0; i < spot.length; i++) {
+      if (
+        req.url.substring(6) === encodeURIComponent(spot[i].Add.slice(3, 6))
+      ) {
+        var spotfilterjson = JSON.parse(JSON.stringify(spot[i]));
+        spotarea.push(spotfilterjson);
+      }
+    }
   }
-  res.render("spot", spot[i]);
+  res.render("spot", { all: all, area: area, spotarea: spotarea,dis:dis});
 });
 app.use((req, res) => {
   res.type("text/plain");

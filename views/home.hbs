@@ -1,33 +1,36 @@
 <style>
-   
     div {
         text-align: center;
         padding: 1em;
     }
     .d1 {
-        width: 55%;
+        width: 60%;
         margin: auto;
         text-align: left; 
     }
     .d2 {
-        width: 55%;
-        margin: auto;
-        text-align: center; 
+        width: 85%;
+        margin: 3px auto;
+        text-align: left; 
     }
     a{
         margin-bottom: 3.5px;
     }
+    p{
+        text-indent: 2em;
+    }
 </style>
-<article>
-    <div>
-        <h1>介紹新北市</h1>
-        <div class="d2">
+    <div class="d2">
             {{#each district}}
             <a href="/spot/{{Area}}" class="btn btn-outline-info">{{Area}}</a>
             {{/each}}
         </div>
+    <div>
+        
+        <h1>介紹新北市</h1>
+        
 
-        <img src="/img/newTaipeicity.png" alt="">
+        <img src="/img/newTaipeicity.png" alt="" width="600">
         
         <div class="d1">
             <h2>新北市地理位置</h2>
@@ -44,8 +47,3 @@
             </p>
         </div>
     </div>
-
-</article>
-<script>
-
-</script>

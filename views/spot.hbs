@@ -1,29 +1,94 @@
 <style>
   div {
-    width: 80%;
-    margin: 1em auto;
+    width: 85%;
+    margin: 3px auto;
+  }
+
+  .but {
+    width: 100%;
+    text-align: center;
+  }
+
+  p {
+    padding: 5px;
+    text-indent: 2em;
+  }
+
+  a {
+    margin-bottom: 3.5px;
+  }
+
+  th {
+    text-align: center;
+  }
+  i{
+    font-size: 2em;
+    color:rgb(247, 194, 97);
+    cursor: pointer;
   }
 </style>
 <div>
+  {{#each dis}}
+  <a href="/spot/{{Area}}" class="btn btn-outline-info">{{Area}}</a>
+  {{/each}}
+</div>
+
+<div style="background-color: aliceblue">
+  {{#each area}}
+  <h1>{{Area}}</h1>
+  <p>{{Synopsis}}</p>
+  {{/each}}
+</div>
+<div>
+  <div class="but">
+    {{#each spotarea}}
+    <a href="#{{Name}}" class="btn btn-outline-success">{{Name}}</a>
+    {{/each}}
+  </div>
   <table class="table table-striped">
-    <thead>
+    {{#each spotarea}}
+    <thead class="table-info">
       <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Add</th>
+        <th scope="col" style="width:7em;" id={{Name}}>名稱</th>
+        <th scope="col">介紹</th>
+        <th scope="col" style="width:8em;">地址</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      {{#each spot}}
       <tr>
         <td>{{Name}}</td>
         <td>{{Description}}</td>
         <td>{{Add}}</td>
+        <td><i class="far fa-bookmark"></i></td>
+        <td style="display:none"><i class="fas fa-bookmark" ></i>塗滿</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><a
+            href="https://www.google.com/search?hl=zh-TW&tbm=isch&source=hp&biw=1440&bih=686&ei=uflwXLzLNpGK8gX0w5jYBw&q={{Name}}">{{Name}}圖片搜尋</a>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+      {{/each}}
+      {{#each all}}
+      <thead class="table-info">
+        <tr>
+          <th scope="col" style="width:7em;">名稱</th>
+          <th scope="col">介紹</th>
+          <th scope="col" style="width:8em;">地址</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tr>
+        <td>{{Name}}</td>
+        <td>{{Description}}</td>
+        <td>{{Add}}</td>
+        <td><i class="far fa-bookmark"></i></td>
+        <td style="display:none"><i class="fas fa-bookmark" ></i>塗滿</td>
       </tr>
       {{/each}}
     </tbody>
   </table>
 </div>
-<script>
-
-</script>
