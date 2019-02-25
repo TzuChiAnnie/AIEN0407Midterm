@@ -8,11 +8,12 @@ app.set("view engine", "hbs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+//HOME
 app.get("/", (req, res) => {
   const district = require("./data/district.json");
   res.render("home", { district: district });
 });
+//SPOT
 app.get("/spot/:area?", (req, res) => {
   const spot = require("./data/spot.json");
   const dis = require("./data/district.json");
@@ -45,6 +46,19 @@ app.get("/spot/:area?", (req, res) => {
     }
   }
   res.render("spot", { all: all, area: area, spotarea: spotarea,dis:dis});
+});
+//ACTIVITY
+app.get("/activity", (req, res) => {
+  const activity = require("./data/activity.json");
+  const actfilter = [];
+  console.log(activity[0].Location.slice(0, 3))
+  for (i = 0; i < activity.length; i++) {
+    if (activity[i].Location.slice(0, 3)=="新北市"){
+      var actfilterjson = JSON.parse(JSON.stringify(activity[i]));
+      actfilter.push(actfilterjson);
+    }
+  }
+  res.render("activity", {actfilter:actfilter});
 });
 app.use((req, res) => {
   res.type("text/plain");

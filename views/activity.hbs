@@ -1,0 +1,35 @@
+<style>
+    article{
+        margin: auto;
+        width: 75%;
+    }
+    h4{
+        background-color: rgb(163, 238, 213);
+    }
+    p{
+        text-indent: 2em;
+        font-size: 1.3em;
+    }
+</style>
+<article>
+    <div>
+        {{#each actfilter}}
+        <h1>{{Name}}</h1>
+        <img src="{{Picture1}}" alt="" width="400">
+        <img src="{{Picture2}}" alt="" width="400">
+        <img src="{{Picture3}}" alt="" width="400">
+        <h4>活動時間：</h4>
+        <p>{{Start}}~{{End}}</p>
+        <h4>簡介：</h4>
+        <p>{{Description}}</p>
+        <h4>官網：</h4>
+        <p><a href="{{Website}}"></a></p>
+        <h4>主辦單位：</h4>
+        <p>{{Org}}</p>
+        <h4>如何到達：</h4>
+        <p>{{Travellinginfo}}</p>
+        <h4>停車資訊：</h4>
+        <p>{{Parkinginfo}}</p>
+        {{/each}}
+    </div>
+</article>

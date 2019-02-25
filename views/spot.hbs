@@ -1,3 +1,4 @@
+
 <style>
   div {
     width: 85%;
@@ -19,14 +20,17 @@
   }
 
   th {
+    width: 8em;
     text-align: center;
   }
-  i{
+
+  i {
     font-size: 2em;
-    color:rgb(247, 194, 97);
+    color: rgb(247, 194, 97);
     cursor: pointer;
   }
 </style>
+
 <div>
   {{#each dis}}
   <a href="/spot/{{Area}}" class="btn btn-outline-info">{{Area}}</a>
@@ -46,22 +50,23 @@
     {{/each}}
   </div>
   <table class="table table-striped">
-    {{#each spotarea}}
+
     <thead class="table-info">
       <tr>
-        <th scope="col" style="width:7em;" id={{Name}}>名稱</th>
+        <th scope="col">名稱</th>
         <th scope="col">介紹</th>
-        <th scope="col" style="width:8em;">地址</th>
-        <th></th>
+        <th scope="col">地址</th>
+        <th style="width:2em;"></th>
       </tr>
     </thead>
     <tbody>
+      {{#each spotarea}}
       <tr>
-        <td>{{Name}}</td>
+        <td id={{Name}}>{{Name}}</td>
         <td>{{Description}}</td>
         <td>{{Add}}</td>
         <td><i class="far fa-bookmark"></i></td>
-        <td style="display:none"><i class="fas fa-bookmark" ></i>塗滿</td>
+        <td style="display:none;"><i class="fas fa-bookmark"></i>塗滿</td>
       </tr>
       <tr>
         <td></td>
@@ -73,20 +78,12 @@
       </tr>
       {{/each}}
       {{#each all}}
-      <thead class="table-info">
-        <tr>
-          <th scope="col" style="width:7em;">名稱</th>
-          <th scope="col">介紹</th>
-          <th scope="col" style="width:8em;">地址</th>
-          <th></th>
-        </tr>
-      </thead>
       <tr>
         <td>{{Name}}</td>
         <td>{{Description}}</td>
         <td>{{Add}}</td>
         <td><i class="far fa-bookmark"></i></td>
-        <td style="display:none"><i class="fas fa-bookmark" ></i>塗滿</td>
+        <td style="display:none"><i class="fas fa-bookmark"></i>塗滿</td>
       </tr>
       {{/each}}
     </tbody>
