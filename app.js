@@ -27,12 +27,15 @@ app.use((req, res, next) => {
 //HOME
 app.get("/", (req, res) => {
   const district = require("./data/district.json");
-  res.render("home", { district: district });
+  const data = res.locals.renderData;
+  data.district = district;
+  res.render("home", data);
 });
 //SPOT
 app.get("/spot/:area?", (req, res) => {
   const spot = require("./data/spot.json");
   const dis = require("./data/district.json");
+  const data = res.locals.renderData;
   const area = [];
   const spotarea = [];
   const all = [];
@@ -61,7 +64,13 @@ app.get("/spot/:area?", (req, res) => {
       }
     }
   }
-  res.render("spot", { all: all, area: area, spotarea: spotarea,dis:dis});
+  // data.area
+  data.all = all;
+  data.area = area;
+  data.spotarea = spotarea;
+  data.dis = dis;
+  res.render("spot", {data,all: data.all, area: data.area, spotarea: data.spotarea,dis:data.dis});
+  // res.render("spot", data);
 });
 //ACTIVITY
 app.get("/activity", (req, res) => {
@@ -75,7 +84,11 @@ app.get("/activity", (req, res) => {
   }
   res.render("activity", {actfilter:actfilter});
 });
-//Login
+//Sign up
+app.get("/signup", (req, res) => {
+  res.render("signup");
+});
+//Sign in
 app.get("/login", (req, res) => {
   const data = res.locals.renderData;
   if (req.session.flashMsg) {
