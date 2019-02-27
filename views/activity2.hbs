@@ -1,0 +1,43 @@
+<style>
+    .card {
+        width: 75%;
+        margin: auto;
+        text-align: center;
+    }
+</style>
+<div class="accordion" id="accordionExample">
+    <div class="card">
+        {{#each actfilter}}
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    <h1>{{Name}}</h1>
+                    <figure style="width:600px;text-align: center;">
+                        <img src="{{Picture1}}" alt="" width="500px">
+                        <figcaption>
+                            <h6>{{Picdescribe1}}</h6>
+                        </figcaption>
+                    </figure>
+                </button>
+            </h5>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+
+                <h3>活動時間：</h3>
+                <p>{{Start}}~{{End}}</p>
+                <h3>簡介：</h3>
+                <p>{{Description}}</p>
+                <h3>官網：</h3>
+                <p><a href="{{Website}}">{{Website}}</a></p>
+                <h3>主辦單位：</h3>
+                <p>{{Org}}</p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<script>
+
+</script>

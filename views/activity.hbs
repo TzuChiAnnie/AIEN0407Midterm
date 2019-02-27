@@ -1,35 +1,64 @@
 <style>
-    article{
+    article {
         margin: auto;
         width: 75%;
+        clear: both;
     }
-    h4{
-        background-color: rgb(163, 238, 213);
-    }
-    p{
+
+    p {
         text-indent: 2em;
         font-size: 1.3em;
     }
 </style>
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        {{#each actfilter}}
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="{{Picture1}}" alt="First slide">
+        </div>
+        {{/each}}
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
 <article>
     <div>
         {{#each actfilter}}
-        <h1>{{Name}}</h1>
+        <h1 id="{{Name}}">{{Name}}</h1>
         <img src="{{Picture1}}" alt="" width="400">
+        <p>{{Picdescribe1}}</p>
         <img src="{{Picture2}}" alt="" width="400">
+        <p>{{Picdescribe2}}</p>
         <img src="{{Picture3}}" alt="" width="400">
-        <h4>活動時間：</h4>
+        <p>{{Picdescribe3}}</p>
+        <h3>活動時間：</h3>
         <p>{{Start}}~{{End}}</p>
-        <h4>簡介：</h4>
+        <h3>簡介：</h3>
         <p>{{Description}}</p>
-        <h4>官網：</h4>
+        <h3>官網：</h3>
         <p><a href="{{Website}}"></a></p>
-        <h4>主辦單位：</h4>
+        <h3>主辦單位：</h3>
         <p>{{Org}}</p>
-        <h4>如何到達：</h4>
+        <h3>如何到達：</h3>
         <p>{{Travellinginfo}}</p>
-        <h4>停車資訊：</h4>
+        <h3>停車資訊：</h3>
         <p>{{Parkinginfo}}</p>
         {{/each}}
     </div>
 </article>
+<script>
+    $('.carousel').carousel()
+</script>
