@@ -5,10 +5,12 @@ const bodyParser = require("body-parser");
 const url = require("url");
 const session = require("express-session");
 const mySQL = require("mysql");
+const moment = require("moment-timezone");
+const sha1 = require('sha1');
 const db = mySQL.createConnection({
   host: "localhost",
   user: "root",
-  password: "root",
+  password: "zaxscd0412",
   database: "test",
 });
 db.connect();
@@ -38,6 +40,12 @@ app.get("/", (req, res) => {
   const data = res.locals.renderData;
   data.district = district;
   res.render("home", data);
+});
+app.get("/dis/:area?", (req, res) => {
+  const district = require("./data/district.json");
+  const food = require("./data/restaurant.json");
+
+  res.render("dis",{district:district});
 });
 //SPOT
 app.get("/spot/:area?", (req, res) => {
@@ -75,6 +83,40 @@ app.get("/spot/:area?", (req, res) => {
   data.dis = dis;
   res.render("spot", data);
 });
+//RESTAURANT
+app.get("/restaurant/:area?", (req, res) => {
+  const restaurant = require("./data/restaurant.json");
+  const dis = require("./data/district.json");
+  const data = res.locals.renderData;
+  const areares = [];
+  const restaurantarea = [];
+  const allres = [];
+  if (req.url.substring(12) == "") {
+    for (i = 0; i < dis.length; i++) {
+      for (j = 0; j < restaurant.length; j++) {
+        if(dis[i].Area==restaurant[j].Add.slice(3,6)){
+          allres.push(restaurant[j]);
+        }   
+      }
+    }
+  } else {
+    for (i = 0; i < dis.length; i++) {
+      if (req.params.area === dis[i].Area) {
+        areares.push(dis[i]);
+      }
+    }
+    for (i = 0; i < restaurant.length; i++) {
+      if (req.params.area === restaurant[i].Add.slice(3, 6)){
+        restaurantarea.push(restaurant[i]);
+      }
+    }
+  }
+  data.restaurantarea = restaurantarea;
+  data.allres = allres;
+  data.areares = areares;
+  data.dis = dis;
+  res.render("restaurant", data);
+});
 //ACTIVITY
 app.get("/activity", (req, res) => {
   const activity = require("./data/activity.json");
@@ -88,61 +130,60 @@ app.get("/activity", (req, res) => {
   data.actfilter=actfilter;
   res.render("activity2", data);
 });
-//Sign up
+//Sign up  完成80%(如果錯誤無法清除input內容)
 app.get("/signup", (req, res) => {
-  res.render("signup");
+  // const data = res.locals.renderData;
+  // if (req.session.msg) {
+  //   data.msg = req.session.msg;
+  //   console.log(req.body);
+  //   delete data;
+  // }
+  res.render("signup",data);
 });
 app.post('/signup', (req, res)=>{
   const data = res.locals.renderData;
   const val = {
-    sales_id: req.body.sales_id,
-    name: req.body.name,
-    birthday: req.body.birthday,
+    admin_id: req.body.admin_id,
+    password: sha1(req.body.password),
+    created_at:moment().format("YYYY-MM-DD HH:mm:ss")
   };
-  data.addForm = val;
-  if (!/^\d{4}\-\d{1,2}\-\d{1,2}$/.test(req.body.birthday)) {
+  data.addForm = val; 
+  if (!req.body.admin_id || !req.body.password) {
     data.msg = {
       type: "danger",
-      info: "Birthday input Wrong",
+      info: "帳號密碼必須輸入",
     };
-    res.render("sales3-add", data);
+    res.render("signup",data);
     return;
   }
-  if (!req.body.sales_id || !req.body.name || !req.body.birthday) {
-    data.msg = {
-      type: "danger",
-      info: "All blank need input",
-    };
-    res.render("sales3-add", data);
-    return;
-  }
-  db.query(
-    "SELECT 1 FROM `sales` WHERE `sales_id`=?",
-    [req.body.sales_id],
+  db.query("SELECT * FROM `admins` WHERE `admin_id`=?",
+    [req.body.admin_id],
     (error, results, fields) => {
       if (results.length) {
         data.msg = {
           type: "danger",
-          info: "sales_id is used",
+          info: "帳號已存在",
         };
-        res.render("sales3_add", data);
+        res.render("signup", data);
         return;
       }
-      const sql = "insert into sales set ?";
+      const sql = "insert into admins set ?";
       db.query(sql, val, (error, results, fields) => {
+        // console.log(results);//看inser結果
         if (error) {
-          console.log(error);
+          // console.log(error);
           res.send(error.sqlMessage);
           return;
         }
         if (results.affectedRows == 1) {
           data.msg = {
             type: "success",
-            info: "Add success",
+            info: "帳號新增成功",
           };
         }
         // res.send("" + results.affectedRows);
-        res.render("sales3-add", data);
+        // res.render("signup", data);
+        res.redirect('/login');
       });
     }
   );
@@ -154,8 +195,6 @@ app.get("/login", (req, res) => {
     data.flashMsg = req.session.flashMsg;
     delete req.session.flashMsg;
   }
-  // data.logined=!!req.session.loginUser;
-  // data.loginUser=req.session.loginUser;
   res.render("login", data);
 });
 app.post('/login', (req, res)=>{

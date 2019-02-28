@@ -72,25 +72,25 @@
         margin-top: 12px;
     }
 </style>
+{{#if msg}}
+    <div class="alert alert-{{msg.type}}">{{msg.info}}</div>
+{{/if}}
 <div class="login">
     <div class="login-screen">
-        {{!-- <div class="app-title">
-            <h1>登入</h1>
-        </div> --}}
         <form method="post">
             <div class="login-form">
             <div class="control-group">
                 <label class="login-field-icon fui-user" for="user">輸入帳號：</label>
             </div>
             <div class="control-group">
-                <input type="text" class="login-field" id="user" name="user">
+                <input type="text" class="login-field" value="{{addForm.admin_id}}" id="admin_id" name="admin_id">
             </div>
 
             <div class="control-group">
                 <label class="login-field-icon fui-lock" for="password">輸入密碼：</label>
             </div>
             <div class="control-group">
-                <input type="password" class="login-field" id="password" name="password">
+                <input type="password" class="login-field" value="{{addForm.password}}" id="password" name="password">
             </div>
             <button type="submit" class="btn1 btn-primary btn-large btn-block">Sign up</button>
         </div>
