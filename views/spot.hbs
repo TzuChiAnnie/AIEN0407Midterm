@@ -37,7 +37,7 @@
   {{/each}}
 </div>
 
-<div style="background-color: aliceblue">
+<div>
   {{#each area}}
   <h1>{{Area}}</h1>
   <p>{{Synopsis}}</p>
@@ -65,8 +65,8 @@
         <td id={{Name}}>{{Name}}</td>
         <td>{{Description}}</td>
         <td>{{Add}}</td>
-        <td><i class="far fa-bookmark"></i></td>
-        <td style="display:none;"><i class="fas fa-bookmark"></i>塗滿</td>
+        <td id="bookmark"><i class="far fa-bookmark"></i></td>
+        <td style="display:none;" id="bookmarkfull"><i class="fas fa-bookmark"></i></td>
       </tr>
       <tr>
         <td></td>
@@ -82,10 +82,18 @@
         <td>{{Name}}</td>
         <td>{{Description}}</td>
         <td>{{Add}}</td>
-        <td><i class="far fa-bookmark"></i></td>
-        <td style="display:none"><i class="fas fa-bookmark"></i>塗滿</td>
+        <td id="bookmark"><i class="far fa-bookmark" ></i></td>
+        <td style="display:none" id="bookmarkfull"><i class="fas fa-bookmark"></i></td>
       </tr>
       {{/each}}
     </tbody>
   </table>
 </div>
+<script>
+  $(document).ready(function(){
+  $("i").click(function(){
+  $("#bookmark").hide();
+  $("#bookmarkfull").show();
+  });
+});
+</script>

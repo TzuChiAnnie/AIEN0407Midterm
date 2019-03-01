@@ -11,7 +11,7 @@ const db = mySQL.createConnection({
   host: "localhost",
   user: "root",
   password: "zaxscd0412",
-  database: "test",
+  database: "test1",
 });
 db.connect();
 app.engine("hbs", exphbs({ defaultLayout: "main", extname: ".hbs" }));
@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   };
   next();
 });
-//HOME
+//新北市
 app.get("/", (req, res) => {
   const district = require("./data/district.json");
   const data = res.locals.renderData;
@@ -47,7 +47,7 @@ app.get("/dis/:area?", (req, res) => {
 
   res.render("dis",{district:district});
 });
-//SPOT
+//觀光景點
 app.get("/spot/:area?", (req, res) => {
   const spot = require("./data/spot.json");
   const dis = require("./data/district.json");
@@ -83,7 +83,7 @@ app.get("/spot/:area?", (req, res) => {
   data.dis = dis;
   res.render("spot", data);
 });
-//RESTAURANT
+//道地小吃
 app.get("/restaurant/:area?", (req, res) => {
   const restaurant = require("./data/restaurant.json");
   const dis = require("./data/district.json");
@@ -117,7 +117,7 @@ app.get("/restaurant/:area?", (req, res) => {
   data.dis = dis;
   res.render("restaurant", data);
 });
-//ACTIVITY
+//節慶活動
 app.get("/activity", (req, res) => {
   const activity = require("./data/activity.json");
   const data = res.locals.renderData;
@@ -128,17 +128,11 @@ app.get("/activity", (req, res) => {
     }
   }
   data.actfilter=actfilter;
-  res.render("activity2", data);
+  res.render("activity", data);
 });
-//Sign up  完成80%(如果錯誤無法清除input內容)
+//註冊
 app.get("/signup", (req, res) => {
-  // const data = res.locals.renderData;
-  // if (req.session.msg) {
-  //   data.msg = req.session.msg;
-  //   console.log(req.body);
-  //   delete data;
-  // }
-  res.render("signup",data);
+  res.render("signup");
 });
 app.post('/signup', (req, res)=>{
   const data = res.locals.renderData;
@@ -153,6 +147,7 @@ app.post('/signup', (req, res)=>{
       type: "danger",
       info: "帳號密碼必須輸入",
     };
+    delete data.addForm;
     res.render("signup",data);
     return;
   }
@@ -164,6 +159,7 @@ app.post('/signup', (req, res)=>{
           type: "danger",
           info: "帳號已存在",
         };
+        delete data.addForm;
         res.render("signup", data);
         return;
       }
@@ -175,20 +171,18 @@ app.post('/signup', (req, res)=>{
           res.send(error.sqlMessage);
           return;
         }
-        if (results.affectedRows == 1) {
+        if (results.affectedRows == 1) { 
           data.msg = {
             type: "success",
             info: "帳號新增成功",
           };
         }
-        // res.send("" + results.affectedRows);
-        // res.render("signup", data);
-        res.redirect('/login');
+        delete data.addForm;
+        res.render("signup", data);
       });
-    }
-  );
+    });
 });
-//Sign in
+//登入
 app.get("/login", (req, res) => {
   const data = res.locals.renderData;
   if (req.session.flashMsg) {
@@ -208,6 +202,7 @@ app.post('/login', (req, res)=>{
                   msg: "帳號或密碼錯誤"
               };
           } else {
+              console.log(req.session);
               req.session.loginUser = req.body.user;
               req.session.flashMsg = {
                   type: "success",
@@ -217,27 +212,16 @@ app.post('/login', (req, res)=>{
           res.redirect('/login');
       });
 });
-//寫固定的帳號密碼
-// app.post("/login", (req, res) => {
-//   if (req.body.user === "annie" && req.body.password === "123") {
-//     req.session.loginUser = req.body.user;
-//     req.session.flashMsg = {
-//       type: "success",
-//       msg: "登入成功",
-//     };
-//   } else {
-//     req.session.flashMsg = {
-//       type: "danger",
-//       msg: "帳號或密碼錯誤",
-//     };
-//   }
-//   res.redirect("/login");
-// });
-
+//登出
 app.get("/logout", (req, res) => {
   delete req.session.loginUser;
-  res.redirect("/login");
+  res.redirect("/");
 });
+//登入後模組
+
+app.use('',require('./my-routers/users.js'))
+
+//404
 app.use((req, res) => {
   res.type("text/plain");
   res.status(404);

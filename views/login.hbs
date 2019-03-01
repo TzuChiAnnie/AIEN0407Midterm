@@ -72,13 +72,17 @@
         margin-top: 12px;
     }
 </style>
+
 {{#if flashMsg}}
 <div class="login-form alert alert-{{flashMsg.type}}" role="alert">
     {{flashMsg.msg}}
 </div>
 {{/if}}
+{{{msg}}}
 {{#if loginUser}}
-<h1>Hello!!{{loginUser}}</h1>
+<div style="margin:5em;text-align:center">
+    <h1>歡迎回來!!{{loginUser}}</h1>
+</div>
 {{else}}
 <div class="login">
     <div class="login-screen">
@@ -100,8 +104,8 @@
             <div class="control-group">
                 <input type="password" class="login-field" id="password" name="password">
             </div>
-            <button type="submit" class="btn1 btn-primary btn-large btn-block">Sign in</button>
-            <a class="login-link" href="#">Lost your password?</a>
+            <button type="submit" class="btn1 btn-primary btn-large btn-block">登入</button>
+            <a class="btn1 btn-primary btn-large btn-block" href="/signup">尚未註冊</a>
         </div>
         </form>
         
