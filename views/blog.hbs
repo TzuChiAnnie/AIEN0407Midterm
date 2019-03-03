@@ -1,8 +1,17 @@
+<style>
+    div{
+        width: 80%;
+        margin: 20px auto;
+    }
 
+    p {
+        text-indent: 2em;
+    }
+</style>
 {{#each blog}}
-<div>
+<div class="blogview">
     <hr>
-    <h3>{{admin_id}}</h3>
+    <h3>{{admin_id}}說：</h3>
     <h1>{{title}}</h1>
     <p>{{message}}</p>
     <h6>{{createtime}}</h6>

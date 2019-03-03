@@ -127,8 +127,26 @@ app.get("/activity", (req, res) => {
       actfilter.push(activity[i]);
     }
   }
+  for(let s in actfilter){
+    actfilter[s].Start=moment(actfilter[s].Start).format('YYYY-MM-DD');
+    actfilter[s].End=moment(actfilter[s].End).format('YYYY-MM-DD');
+  }
   data.actfilter=actfilter;
   res.render("activity", data);
+});
+//部落格
+app.get('/blog',(req,res)=>{
+  const data = res.locals.renderData;
+  db.query(
+    "select * from post order by createtime desc",
+    (error, results, fields) => {
+      for(let s in results){
+        results[s].createtime=moment(results[s].createtime).format('YYYY-MM-DD HH:mm:ss');
+      }
+      data.blog=results;
+      res.render('blog',data);
+    }
+  );
 });
 //註冊
 app.get("/signup", (req, res) => {

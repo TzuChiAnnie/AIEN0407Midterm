@@ -26,7 +26,7 @@
 
   i {
     font-size: 2em;
-    color: rgb(247, 194, 97);
+    color: rgb(247, 161, 2);
     cursor: pointer;
   }
 </style>
@@ -65,7 +65,7 @@
         <td id={{Name}}>{{Name}}</td>
         <td>{{Description}}</td>
         <td>{{Add}}</td>
-        <td id="bookmark"><i class="far fa-bookmark"></i></td>
+        <td id="bookmark"><i class="far fa-bookmark" name="{{Id}}" id="{{Id}}"></i></td>
         <td style="display:none;" id="bookmarkfull"><i class="fas fa-bookmark"></i></td>
       </tr>
       <tr>
@@ -82,7 +82,7 @@
         <td>{{Name}}</td>
         <td>{{Description}}</td>
         <td>{{Add}}</td>
-        <td id="bookmark"><i class="far fa-bookmark" ></i></td>
+        <td id="bookmark"><i class="far fa-bookmark" name="{{Id}}" id="{{Id}}"></i></td>
         <td style="display:none" id="bookmarkfull"><i class="fas fa-bookmark"></i></td>
       </tr>
       {{/each}}
@@ -92,8 +92,13 @@
 <script>
   $(document).ready(function(){
   $("i").click(function(){
+    console.log(document.getElementsByTagName('i'))
   $("#bookmark").hide();
   $("#bookmarkfull").show();
+  });
+  $("#bookmarkfull").click(function(){
+  $("#bookmarkfull").hide();
+  $("#bookmark").show();
   });
 });
 </script>

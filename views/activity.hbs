@@ -1,18 +1,28 @@
 <style>
-    .card {
+    .view{
         width: 75%;
         margin: auto;
         text-align: center;
     }
+    .actbtn {
+    width: 75%;
+    margin: 3px auto;
+    text-align: center;
+  }
 </style>
+<div class="actbtn">
+  {{#each actfilter}}
+  <a href="#{{Name}}" class="btn btn-outline-info">{{Name}}</a>
+  {{/each}}
+</div>
 <div class="accordion" id="accordionExample">
-    <div class="card">
+    <div class="view">
         {{#each actfilter}}
         <div class="card-header" id="headingOne">
             <h5 class="mb-0">
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
                     aria-expanded="true" aria-controls="collapseOne">
-                    <h1>{{Name}}</h1>
+                    <h1 id="{{Name}}">{{Name}}</h1>
                     <figure style="width:600px;text-align: center;">
                         <img src="{{Picture1}}" alt="" width="500px">
                         <figcaption>

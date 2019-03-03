@@ -14,24 +14,31 @@
         <a class="nav-link" href="/restaurant">道地小吃</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/activity">節慶活動</a>
+        <a class="nav-link" href="/activity">節慶活動</a>  
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          個人服務
+          部落格
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/savespot">儲存景點</a>
-          <a class="dropdown-item" href="/blog">個人部落格</a>
+          <a class="dropdown-item" href="/blog">部落格首頁</a>
+          <a class="dropdown-item" href="/user-blog">個人部落格</a>
         </div>
       </li>
     </ul>
     <ul class="navbar-nav">
       <li class="nav-item">
         {{#if loginUser}}
-      <li class="nav-item">
-        <a class="nav-link" href="/login">{{loginUser}}</a>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{loginUser}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/savespot">儲存景點</a>
+          <a class="dropdown-item" href="/user-blog">個人部落格</a>
+        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
