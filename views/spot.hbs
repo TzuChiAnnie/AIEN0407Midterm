@@ -49,6 +49,7 @@
     <a href="#{{Name}}" class="btn btn-outline-success">{{Name}}</a>
     {{/each}}
   </div>
+  <form method="POST">
   <table class="table table-striped">
 
     <thead class="table-info">
@@ -61,10 +62,10 @@
     </thead>
     <tbody>
       {{#each spotarea}}
-      <tr>
-        <td id={{Name}}>{{Name}}</td>
-        <td>{{Description}}</td>
-        <td>{{Add}}</td>
+      <tr class="data-item" data-id="{{Id}}">
+        <td id={{Name}} class="data-field" data-title="name">{{Name}}</td>
+        <td class="data-field" data-title="desc">{{Description}}</td>
+        <td class="data-field" data-title="address">{{Add}}</td>
         <td id="bookmark"><i class="far fa-bookmark" name="{{Id}}" id="{{Id}}"></i></td>
         <td style="display:none;" id="bookmarkfull"><i class="fas fa-bookmark"></i></td>
       </tr>
@@ -88,17 +89,35 @@
       {{/each}}
     </tbody>
   </table>
+  </form>
 </div>
 <script>
   $(document).ready(function(){
-  $("i").click(function(){
-    console.log(document.getElementsByTagName('i'))
-  $("#bookmark").hide();
-  $("#bookmarkfull").show();
+  $("i").click(function(event){
+    {{!-- console.log(document.getElementsByTagName('i')) --}}
+    $("#bookmark").hide();
+    $("#bookmarkfull").show();
+
+    var data = {};
+    var btn = $(this);
+    var item = btn.closest('tr.data-item');
+    var fields = item.find('.data-field');
+    data.id = item.attr('data-id');
+    fields.each(function(){
+      var val = $(this).text();
+      var title = $(this).attr('data-title');
+      console.log($(this).text());
+
+      data[title] = val;
+    });
+    console.log(data);
+
+
+    
   });
   $("#bookmarkfull").click(function(){
-  $("#bookmarkfull").hide();
-  $("#bookmark").show();
+    $("#bookmarkfull").hide();
+    $("#bookmark").show();
   });
 });
 </script>

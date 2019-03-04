@@ -3,7 +3,6 @@
         width: 80%;
         margin: 20px auto;
     }
-
     p {
         text-indent: 2em;
     }
@@ -11,6 +10,8 @@
 {{#each blog}}
 <div class="blogview">
     <hr>
+    <h3><a href="/user-blog/edit/{{title}}"><i class="fas fa-pen"></i></a></h3>
+    <h3 style="float: right"><a href="javascript:remove_item('{{title}}')"><i class="fas fa-trash" style="color: brown"></i></a></h3>
     <h1>{{title}}</h1>
     <p>{{message}}</p>
     <h6>{{createtime}}</h6>
@@ -33,3 +34,10 @@
         </div>
     </form>
 </div>
+<script>
+    function remove_item(title) {
+    if (confirm("確定刪除<<" + title + ">>篇文章?")) {
+      location.href = '/user-blog/remove/'+ title;
+    }
+  }
+</script>
