@@ -72,7 +72,7 @@ app.get("/spot/:area?", (req, res) => {
     for (i = 0; i < spot.length; i++) {
       if (
         req.url.substring(6) === encodeURIComponent(spot[i].Add.slice(3, 6))
-      ) {
+      ){
         spotarea.push(spot[i]);
       }
     }

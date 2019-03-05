@@ -15,17 +15,42 @@ router.use((req, res, next) => {
     next();
   }
 });
-//儲存景點
-router.post('/spot:area?',(req,res)=>{
-    const spot = require('./data/spot.json')
-    
-    // console.log(req.body);
-});
 //儲存景點顯示
 router.get("/savespot", (req, res) => {
   const data = res.locals.renderData;
-  res.render("savespot", data);
+  db.query(
+    "select * from spot where admin_id=?",
+    [data.loginUser],
+    (error, results, fields) => {
+      data.spot = results;
+      res.render("savespot", data);
+    });
 });
+//景點儲存
+router.post("/savespot", (req, res) => {
+  const data = res.locals.renderData;
+  const val = {
+    name: req.body.name,
+    desc: req.body.desc,
+    addr: req.body.address,
+    admin_id: data.loginUser,
+  };
+  db.query("insert into spot set ?", val, (error, results, fields) => {
+    // console.log(results);
+  res.render("savespot");
+  });
+});
+//景點儲存刪除
+router.get("/savespot/remove/:name", (req, res) => {
+  const data = res.locals.renderData;
+  // console.log(req.params.title);
+  db.query(
+    "delete from spot where name=? and admin_id=?",
+    [req.params.name,data.loginUser],
+    (error, results, fields) => {
+      res.redirect("/savespot");
+    });
+  });
 //個人部落格顯示
 router.get("/user-blog", (req, res) => {
   const data = res.locals.renderData;
@@ -105,10 +130,11 @@ router.post("/user-blog/edit/:title", (req, res) => {
 });
 //刪除
 router.get("/user-blog/remove/:title", (req, res) => {
+  const data = res.locals.renderData;
   // console.log(req.params.title);
   db.query(
-    "delete from post where title=?",
-    [req.params.title],
+    "delete from post where admin_id=? AND title=?",
+    [data.loginUser,req.params.title],
     (error, results, fields) => {
       res.redirect("/user-blog");
     });
