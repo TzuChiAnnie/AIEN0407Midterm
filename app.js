@@ -59,6 +59,7 @@ app.get("/spot/:area?", (req, res) => {
     for (i = 0; i < dis.length; i++) {
       for (j = 0; j < spot.length; j++) {
         if(dis[i].Area==spot[j].Add.slice(3,6)){
+          // spot[j].saved="far fa-bookmark"
           all.push(spot[j]);
         }   
       }
@@ -73,6 +74,7 @@ app.get("/spot/:area?", (req, res) => {
       if (
         req.url.substring(6) === encodeURIComponent(spot[i].Add.slice(3, 6))
       ){
+        spot[i].saved="far fa-bookmark";
         spotarea.push(spot[i]);
       }
     }
@@ -81,7 +83,31 @@ app.get("/spot/:area?", (req, res) => {
   data.area = area;
   data.spotarea = spotarea;
   data.dis = dis;
-  res.render("spot", data);
+  if(data && data.loginUser){
+    db.query(
+      "select `name` from spot where admin_id=?",
+      [data.loginUser],
+      (error, results, fields) => {
+        data.savespots = results;
+        console.log(results)
+
+        for(let s in spot){
+          let item = spot[s];
+          for(let ss in results){
+            if(item.Name == results[ss].name.trim()){
+              item.saved = "fas fa-bookmark";
+              console.log(item)
+            }else{
+              item.saved = "far fa-bookmark";
+            }
+          }
+        }
+        res.render("spot", data);
+      });
+  } else {
+    res.render("spot", data);
+  }
+  
 });
 //道地小吃
 app.get("/restaurant/:area?", (req, res) => {
@@ -176,6 +202,7 @@ app.post('/signup', (req, res)=>{
         data.msg = {
           type: "danger",
           info: "帳號已存在",
+
         };
         delete data.addForm;
         res.render("signup", data);
@@ -195,7 +222,7 @@ app.post('/signup', (req, res)=>{
             info: "帳號新增成功",
           };
         }
-        delete data.addForm;
+        delete data.addForm
         res.render("signup", data);
       });
     });

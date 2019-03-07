@@ -37,8 +37,10 @@ router.post("/savespot", (req, res) => {
   };
   db.query("insert into spot set ?", val, (error, results, fields) => {
     // console.log(results);
-  res.render("savespot");
+  // res.render("savespot");
+  
   });
+  // res.redirect('/savespot')
 });
 //景點儲存刪除
 router.get("/savespot/remove/:name", (req, res) => {

@@ -65,8 +65,7 @@
           <td id={{Name}} class="data-field" data-title="name">{{Name}}</td>
           <td class="data-field" data-title="desc">{{Description}}</td>
           <td class="data-field" data-title="address">{{Add}}</td>
-          <td class="bookmark"><i class="far fa-bookmark" name="{{Id}}" id="{{Id}}"></i></td>
-          <td style="display:none;" class="bookmarkfull"><i class="fas fa-bookmark"></i></td>
+          <td class="bookmark"><i class="{{saved}}" name="{{Id}}" id="{{Id}}"></i></td>
         </tr>
         <tr>
           <td></td>
@@ -82,8 +81,7 @@
           <td id={{Name}} class="data-field" data-title="name">{{Name}}</td>
           <td class="data-field" data-title="desc">{{Description}}</td>
           <td class="data-field" data-title="address">{{Add}}</td>
-          <td class="bookmark"><i class="far fa-bookmark" name="{{Id}}" id="{{Id}}"></i></td>
-          <td style="display:none;" class="bookmarkfull"><i class="fas fa-bookmark"></i></td>
+          <td class="bookmark"><i class="{{saved}}" name="{{Id}}" id="{{Id}}"></i></td>
         </tr>
         {{/each}}
       </tbody>
@@ -102,7 +100,7 @@
         var val = $(this).text();
         var title = $(this).attr('data-title');
         dataval[title] = val;
-        btn.closest('td.bookmark').replaceWith('<td><i class="fas fa-bookmark"></i></td>');
+        btn.closest('td').replaceWith('<td><i class="fas fa-bookmark"></i></td>');
       });
       console.log(dataval);
       $.ajax({
@@ -111,5 +109,9 @@
         data: dataval,
       });
     });
+    $('.fas').click(function(){
+      var btn1 = $(this);
+      btn1.closest('td').replaceWith('<td><i class="far fa-bookmark"></i></td>');
+    })
   });
 </script>

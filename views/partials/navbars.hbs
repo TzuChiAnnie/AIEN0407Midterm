@@ -36,14 +36,15 @@
           {{loginUser}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/savespot">儲存景點</a>
+          <a class="dropdown-item" href="/savespot">已儲存景點</a>
           <a class="dropdown-item" href="/user-blog">個人部落格</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/logout">Logout</a>
+        <a class="nav-link" href="/logout">登出</a>
       </li>
       {{else}}
+      <li class="nav-item">
       <a class="btn btn-outline-success" style="margin:0 3px;" href="/signup">註冊</a>
       </li>
       <li class="nav-item">
